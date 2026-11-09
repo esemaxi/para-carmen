@@ -81,7 +81,13 @@ img, video { max-width: 100%; }
 .portada { position: relative; height: clamp(540px, 86vh, 900px); overflow: hidden;
   background: radial-gradient(110% 85% at 55% 36%, #2d1e3a 0%, #191020 55%, var(--noche) 100%); }
 #visor { position: absolute; inset: 0; }
-#visor canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.foto-portada { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 45% 50%; display: none; }
+.portada.sin-3d .foto-portada { display: block; }
+.portada.sin-3d #visor { visibility: hidden; }
+.portada.sin-3d::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(20,13,26,.35) 0%, rgba(20,13,26,0) 30%, rgba(20,13,26,.25) 55%, rgba(20,13,26,.88) 100%); }
+.portada .arriba, .portada .abajo { z-index: 2; }
+#visor canvas { display: block; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; }
 #visor canvas:active { cursor: grabbing; }
 .portada .arriba { position: absolute; top: 20px; left: 24px; right: 24px; display: flex; justify-content: space-between; gap: 16px; pointer-events: none; }
 .portada .abajo { position: absolute; left: 24px; right: 24px; bottom: 26px; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; pointer-events: none; }
@@ -199,6 +205,7 @@ footer { border-top: 1px solid var(--hilo); }
 </div>
 
 <header class="portada">
+  <img class="foto-portada" src="lamina_1_ramo-1200.jpg" srcset="lamina_1_ramo-1200.jpg 1200w, lamina_1_ramo-2100.jpg 2100w" sizes="100vw" alt="Ramo de violetas atado con cinta de raso marfil">
   <div id="visor" aria-label="Ramo de violetas en 3D. Arrastra para girarlo."></div>
   <div class="arriba">
     <span class="versal">Viola odorata, ramillete V-01</span>
