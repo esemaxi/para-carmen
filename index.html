@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Violetas para Carmen</title>
+<meta name="description" content="Envío urgente de Tomares a Lisboa. Frágil: contiene flores.">
+<meta name="theme-color" content="#5c28a5">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Un envío para Carmen">
+<meta property="og:description" content="Envío urgente de Tomares a Lisboa. Frágil: contiene flores.">
+<meta property="og:url" content="https://esemaxi.github.io/para-carmen/">
+<meta property="og:image" content="https://esemaxi.github.io/para-carmen/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='%235c28a5'%3E%3Cellipse cx='24' cy='20' rx='11' ry='15' transform='rotate(-18 24 20)'/%3E%3Cellipse cx='40' cy='20' rx='11' ry='15' transform='rotate(18 40 20)'/%3E%3Cellipse cx='16' cy='36' rx='12' ry='9' fill='%237b4fc9'/%3E%3Cellipse cx='48' cy='36' rx='12' ry='9' fill='%237b4fc9'/%3E%3Cellipse cx='32' cy='46' rx='13' ry='14' fill='%236a35b8'/%3E%3C/g%3E%3Ccircle cx='32' cy='35' r='4' fill='%23efe6d2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Un folio de láminas de herbario, de noche: cada sección es una lámina numerada.
+     El ramo vivo abre el folio; debajo, láminas, anatomía, plano y notas, en una columna alineada a la izquierda. */
+  --noche: #140d1a;
+  --terciopelo: #21162a;
+  --marfil: #efe6d2;
+  --marfil-2: #c3b8a7;
+  --violeta: #a989e8;
+  --salvia: #b2c29e;
+  --tinta: #2a1d30;
+  --hilo: rgba(239, 230, 210, 0.16);
+  --f-display: "IM Fell English", "Iowan Old Style", Georgia, serif;
+  --f-versal: "IM Fell English SC", "IM Fell English", Georgia, serif;
+  --f-texto: "Spectral", Georgia, "Times New Roman", serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--noche); color: var(--marfil); }
+body { font-family: var(--f-texto); font-weight: 300; font-size: 18px; line-height: 1.65; }
+a { color: var(--violeta); }
+:focus-visible { outline: 2px solid var(--violeta); outline-offset: 3px; }
+img, video { max-width: 100%; }
+
+.versal { font-family: var(--f-versal); font-size: 16px; letter-spacing: 0.03em; color: var(--salvia); }
+
+/* ---------- sobre de entrega */
+.sobre { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; padding: 20px;
+  background: radial-gradient(120% 90% at 50% 40%, #2c1d39 0%, #170f1e 60%, var(--noche) 100%);
+  transition: opacity 1.1s ease, visibility 0s linear 1.1s; }
+.sobre.abierto { opacity: 0; visibility: hidden; }
+.carta { position: relative; width: min(560px, 100%); background: var(--marfil); color: var(--tinta); border-radius: 4px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.55); padding: 28px 28px 56px; display: grid; gap: 16px; overflow: hidden;
+  transition: transform 1.1s cubic-bezier(.6,-0.2,.4,1); }
+.sobre.abierto .carta { transform: translateY(-40px) scale(.96); }
+.carta .versal { color: #5d6e4c; }
+.carta h2 { font-family: var(--f-display); font-style: italic; font-weight: 400; font-size: clamp(44px, 10vw, 68px); line-height: .95; margin: 0; }
+.ruta { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; }
+.ruta svg { width: 100%; height: 40px; overflow: visible; }
+.ruta .ciudad { font-family: var(--f-versal); font-size: 18px; line-height: 1.1; }
+.ruta .ciudad small { display: block; font-family: var(--f-texto); font-style: italic; font-size: 13px; color: #6f6176; }
+#trayecto { stroke-dasharray: 5 6; animation: viaja 2.4s linear infinite; }
+@keyframes viaja { to { stroke-dashoffset: -22; } }
+.datos { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; border-top: 1px dashed rgba(42,29,48,.3); border-bottom: 1px dashed rgba(42,29,48,.3); padding: 10px 0; }
+.datos div { display: grid; gap: 0; align-content: start; }
+.datos span:last-child { font-size: 15px; line-height: 1.35; }
+.lazo { position: absolute; left: 0; right: 0; bottom: 16px; height: 18px; background: linear-gradient(#f7f1e4, #d9cdb5 60%, #efe6d2);
+  box-shadow: 0 1px 0 rgba(0,0,0,.08); pointer-events: none; transition: transform 1s ease, opacity 1s ease; }
+.lazo.izq { right: 50%; } .lazo.der { left: 50%; }
+.sobre.abierto .lazo.izq { transform: translateX(-110%) rotate(-8deg); opacity: 0; }
+.sobre.abierto .lazo.der { transform: translateX(110%) rotate(8deg); opacity: 0; }
+.matasellos { position: absolute; right: 22px; top: 20px; width: 94px; height: 94px; border-radius: 50%;
+  border: 2px solid rgba(92,40,165,.55); display: grid; place-items: center; transform: rotate(-12deg);
+  font-family: var(--f-versal); font-size: 12px; color: rgba(92,40,165,.85); text-align: center; line-height: 1.25; }
+#desatar { justify-self: start; font-family: var(--f-versal); font-size: 19px; letter-spacing: .02em;
+  background: #5c28a5; color: #f6efff; border: 0; border-radius: 999px; padding: 12px 26px 14px; cursor: pointer;
+  box-shadow: 0 8px 24px rgba(92,40,165,.35); position: relative; z-index: 2; min-height: 48px; }
+#desatar:hover { background: #6d36bd; }
+
+/* ---------- portada con el ramo 3D */
+.portada { position: relative; height: clamp(540px, 86vh, 900px); overflow: hidden;
+  background: radial-gradient(110% 85% at 55% 36%, #2d1e3a 0%, #191020 55%, var(--noche) 100%); }
+#visor { position: absolute; inset: 0; }
+#visor canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+#visor canvas:active { cursor: grabbing; }
+.portada .arriba { position: absolute; top: 20px; left: 24px; right: 24px; display: flex; justify-content: space-between; gap: 16px; pointer-events: none; }
+.portada .abajo { position: absolute; left: 24px; right: 24px; bottom: 26px; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; pointer-events: none; }
+.dedicatoria h1 { font-family: var(--f-display); font-style: italic; font-weight: 400; font-size: clamp(54px, 8.5vw, 108px); line-height: .9; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+.dedicatoria p { margin: 12px 0 0; max-width: 36ch; color: var(--marfil-2); font-size: 18px; }
+#estado { text-align: right; max-width: 30ch; font-style: italic; color: var(--marfil-2); font-size: 15px; }
+
+/* ---------- folio */
+main { max-width: 1180px; margin: 0 auto; padding: 96px 24px 80px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 120px; }
+section { display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px; scroll-margin-top: 24px; min-width: 0; }
+main > section + section { content-visibility: auto; contain-intrinsic-size: auto 1100px; }
+.cabecera { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: 18px; border-bottom: 1px solid var(--hilo); padding: 0 0 12px; }
+.cabecera .num { font-family: var(--f-versal); font-size: 22px; color: var(--violeta); }
+.cabecera h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(36px, 5vw, 56px); line-height: 1; margin: 0; text-wrap: balance; }
+.intro { max-width: 62ch; margin: 0; color: var(--marfil-2); }
+
+.laminas { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 22px; }
+figure { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; align-content: start; min-width: 0; }
+figure img, figure video { width: 100%; height: auto; display: block; background: var(--terciopelo); }
+.laminas figure { overflow: hidden; }
+.laminas figure img { transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+@media (hover: hover) { .laminas figure:hover img { transform: scale(1.025); } }
+figcaption { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline; }
+figcaption .pie { font-style: italic; color: var(--marfil-2); font-size: 16px; }
+.l-ancha { grid-column: 1 / -1; }
+.l-mitad { grid-column: span 6; }
+.l-cuadrada img { aspect-ratio: 1 / 1; object-fit: cover; }
+
+/* ---------- anatomía */
+.anatomia { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); gap: 28px; align-items: start; }
+.lamina-papel { position: relative; background: #fbf8f1; border-radius: 3px; padding: 14px; box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+.lamina-papel .marco { position: relative; }
+.lamina-papel img { display: block; width: 100%; height: auto; }
+.punto { position: absolute; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--tinta); color: var(--marfil); font-family: var(--f-versal); font-size: 17px; line-height: 1;
+  box-shadow: 0 0 0 3px #fbf8f1, 0 4px 10px rgba(0,0,0,.25); transition: transform .2s ease, background .2s ease; }
+.punto[aria-pressed="true"] { background: #5c28a5; transform: scale(1.15); }
+.punto::before { content: ""; position: absolute; inset: -6px; }
+.leyenda { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.leyenda button { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--hilo); color: var(--marfil);
+  font: inherit; padding: 10px 4px; cursor: pointer; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 8px; align-items: baseline; min-height: 44px; }
+.leyenda button .n { font-family: var(--f-versal); color: var(--violeta); }
+.leyenda button .t { font-family: var(--f-display); font-size: 21px; }
+.leyenda button[aria-pressed="true"] .t { font-style: italic; color: #fff; }
+.leyenda button[aria-pressed="true"] { border-bottom-color: var(--violeta); }
+.detalle { margin: 18px 0 0; padding: 16px 18px; background: var(--terciopelo); border-radius: 3px; color: var(--marfil-2); min-height: 6.5em; }
+.detalle strong { display: block; font-family: var(--f-display); font-weight: 400; font-size: 24px; color: var(--marfil); margin-bottom: 4px; }
+
+/* ---------- plano */
+.plano-btn { display: block; padding: 0; border: 0; background: #fff; cursor: zoom-in; width: 100%; min-width: 0; overflow: hidden; }
+.plano-btn img { display: block; width: 100%; height: auto; }
+.visor-plano { position: fixed; inset: 0; z-index: 40; background: rgba(10,6,14,.94); display: none; overflow: auto; }
+.visor-plano.abierto { display: block; }
+.visor-plano img { display: block; width: max(1600px, 140vw); max-width: none; background: #fff; }
+.cerrar { position: fixed; top: 14px; right: 14px; z-index: 41; font-family: var(--f-versal); font-size: 18px; background: var(--marfil); color: var(--tinta);
+  border: 0; border-radius: 999px; padding: 10px 20px; cursor: pointer; min-height: 44px; }
+
+/* ---------- notas */
+.notas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px; }
+.notas article { display: grid; gap: 8px; align-content: start; }
+.notas h3 { font-family: var(--f-display); font-style: italic; font-weight: 400; font-size: 27px; line-height: 1.15; margin: 0; text-wrap: balance; }
+.notas p { margin: 0; color: var(--marfil-2); }
+
+.sin-video { display: none; }
+.petalos { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 25; }
+.punto.aparece { animation: brota .6s cubic-bezier(.3,1.6,.5,1) both; }
+@keyframes brota { from { transform: scale(.2); } to { transform: scale(1); } }
+.desliza { display: none; margin: 8px 0 0; font-style: italic; color: var(--marfil-2); font-size: 15px; }
+[hidden] { display: none !important; }
+
+footer { border-top: 1px solid var(--hilo); }
+.cajetin { max-width: 1180px; margin: 0 auto; padding: 24px 24px 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px 24px; }
+.cajetin div { display: grid; gap: 0; }
+
+@media (max-width: 760px) {
+  .l-mitad { grid-column: 1 / -1; }
+  .anatomia, .notas { grid-template-columns: minmax(0, 1fr); }
+  .anatomia > div { min-width: 0; }
+  .portada .abajo { flex-direction: column; align-items: flex-start; }
+  #estado { text-align: left; }
+  .portada .arriba span:last-child { display: none; }
+  .punto { width: 28px; height: 28px; margin: -14px 0 0 -14px; font-size: 15px; }
+  main { gap: 84px; padding-top: 64px; }
+  .lamina-papel { overflow-x: auto; padding: 10px; }
+  .lamina-papel .marco { width: 720px; }
+  .desliza { display: block; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .revelado .dedicatoria h1 { animation: aparece 2.2s ease-out both; }
+  .revelado .dedicatoria p { animation: aparece 2.2s .5s ease-out both; }
+  @keyframes aparece { from { opacity: 0.25; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+}
+@media (prefers-reduced-motion: reduce) { #trayecto { animation: none; } .carta, .lazo, .sobre, .laminas figure img { transition: none; } .punto.aparece { animation: none; } }
+</style>
+</head>
+<body>
+<div class="sobre" id="sobre" role="dialog" aria-modal="true" aria-labelledby="t-sobre">
+  <div class="carta">
+    <div class="matasellos" aria-hidden="true">Tomares<br>9 nov 2026<br>Correo floral</div>
+    <span class="versal">Envío urgente, frágil: contiene flores</span>
+    <h2 id="t-sobre">Para Carmen</h2>
+    <div class="ruta" aria-label="De Tomares, Sevilla, a Lisboa">
+      <span class="ciudad">Tomares<small>Sevilla</small></span>
+      <svg viewBox="0 0 200 40" aria-hidden="true"><circle cx="4" cy="30" r="3.5" fill="#5c28a5"/><path id="trayecto" d="M4 30 Q100 -14 196 26" fill="none" stroke="#5c28a5" stroke-width="1.6"/><circle cx="196" cy="26" r="3.5" fill="none" stroke="#5c28a5" stroke-width="1.6"/></svg>
+      <span class="ciudad">Lisboa<small>Portugal</small></span>
+    </div>
+    <div class="datos">
+      <div><span class="versal">Distancia</span><span>310 km en línea recta</span></div>
+      <div><span class="versal">Contenido</span><span>64 violetas y 7 capullos</span></div>
+      <div><span class="versal">Estado</span><span>Entregado</span></div>
+    </div>
+    <button id="desatar" type="button">Desatar el lazo</button>
+    <span class="lazo izq" aria-hidden="true"></span><span class="lazo der" aria-hidden="true"></span>
+  </div>
+</div>
+
+<header class="portada">
+  <div id="visor" aria-label="Ramo de violetas en 3D. Arrastra para girarlo."></div>
+  <div class="arriba">
+    <span class="versal">Viola odorata, ramillete V-01</span>
+    <span class="versal">64 flores, 7 capullos y 24 hojas</span>
+  </div>
+  <div class="abajo">
+    <div class="dedicatoria">
+      <h1>Para Carmen</h1>
+      <p>Un ramo de violetas que no se marchita, dibujado pieza a pieza y pétalo a pétalo, con todo mi cariño.</p>
+    </div>
+    <span id="estado">Abriendo el ramo…</span>
+  </div>
+</header>
+
+<main>
+  <section aria-labelledby="t-laminas">
+    <div class="cabecera"><span class="num">I</span><h2 id="t-laminas">Láminas</h2></div>
+    <p class="intro">El mismo ramo, fotografiado como si fuera de verdad: sobre un mantel de lino, junto a una ventana, con unas violetas sueltas que se escaparon al atarlo.</p>
+    <div class="laminas">
+      <figure class="l-ancha">
+        <img src="lamina_1_ramo-1200.jpg" srcset="lamina_1_ramo-1200.jpg 1200w, lamina_1_ramo-2100.jpg 2100w" sizes="(max-width: 1180px) 100vw, 1132px" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true" alt="Ramo de violetas atado con cinta de raso marfil, tumbado sobre un mantel de lino y una mesa de nogal, con luz de ventana." width="2100" height="1400">
+        <figcaption><span class="versal">Lámina I</span><span class="pie">El ramo sobre lino, con luz de tarde</span></figcaption>
+      </figure>
+      <figure class="l-mitad">
+        <img src="lamina_2_rocio-1200.jpg" srcset="lamina_2_rocio-1200.jpg 1200w, lamina_2_rocio-1800.jpg 1800w" sizes="(max-width: 760px) 100vw, 560px" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true" alt="Primer plano de violetas con gotas de rocío sobre los pétalos." width="1800" height="1200">
+        <figcaption><span class="versal">Lámina II</span><span class="pie">Rocío sobre los pétalos</span></figcaption>
+      </figure>
+      <figure class="l-mitad l-cuadrada">
+        <img src="lamina_3_cenital-1200.jpg" srcset="lamina_3_cenital-1200.jpg 1200w, lamina_3_cenital-1600.jpg 1600w" sizes="(max-width: 760px) 100vw, 560px" loading="lazy" decoding="async" onerror="this.closest('figure').hidden=true" alt="Vista cenital del ramo con la cinta extendida y pétalos sueltos sobre el mantel." width="1600" height="1600">
+        <figcaption><span class="versal">Lámina III</span><span class="pie">Vista desde arriba</span></figcaption>
+      </figure>
+      <figure class="l-ancha">
+        <video id="pelicula" src="ramo_pelicula.mp4" data-fallback="ramo_giro.mp4" poster="poster_giro.jpg" controls playsinline muted loop preload="none" aria-label="Película del ramo de violetas"></video>
+        <figcaption><span class="versal">Lámina IV</span><span class="pie">La película del ramo</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-anatomia">
+    <div class="cabecera"><span class="num">II</span><h2 id="t-anatomia">Anatomía de una violeta</h2></div>
+    <p class="intro">Cada flor del ramo está construida con estas piezas, a la escala real de una violeta de olor: 23 mm de ancho y 25 de alto. Toca un número para ver qué es cada una.</p>
+    <div class="anatomia">
+      <div>
+        <div class="lamina-papel">
+          <div class="marco" id="marco">
+            <img src="anatomia-1200.jpg" srcset="anatomia-1200.jpg 1200w, anatomia-2400.jpg 2400w" sizes="(max-width: 760px) 720px, 700px" loading="lazy" decoding="async" alt="Alzado y perfil de una violeta a escala 4:1, con pétalos, nervios, sépalos, espolón y pedúnculo." width="2421" height="1701">
+          </div>
+        </div>
+        <p class="desliza">Desliza la lámina hacia un lado para ver el perfil.</p>
+      </div>
+      <div>
+        <ol class="leyenda" id="leyenda"></ol>
+        <p class="detalle" id="detalle" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-plano">
+    <div class="cabecera"><span class="num">III</span><h2 id="t-plano">El plano</h2></div>
+    <p class="intro">Porque las cosas bien hechas se dibujan antes. Alzado y perfil a escala 4:1, despiece de los pétalos, la hoja a 2:1 y el ramo completo a 1:3, con su lista de piezas y su cajetín, como cualquier plano de la oficina. Toca el plano para verlo en grande.</p>
+    <figure>
+      <button class="plano-btn" id="abrir-plano" type="button" aria-label="Ver el plano en grande">
+        <img src="plano_V-01-1600.jpg" srcset="plano_V-01-1600.jpg 1600w, plano_V-01-2480.jpg 2480w" sizes="(max-width: 1180px) 100vw, 1132px" loading="lazy" decoding="async" alt="Plano técnico A3 de una violeta: alzado, perfil, despiece de pétalos con cotas, hoja acorazonada, alzado del ramo, lista de piezas y cajetín con la dedicatoria." width="2480" height="1753">
+      </button>
+      <figcaption><span class="versal">Plano V-01, formato A3</span><span class="pie">Violeta (Viola odorata L.), definición y ramo</span></figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="t-notas">
+    <div class="cabecera"><span class="num">IV</span><h2 id="t-notas">Por qué violetas</h2></div>
+    <div class="notas">
+      <article>
+        <h3>Su perfume juega al escondite</h3>
+        <p>El olor de la violeta lleva iononas, unas moléculas que adormecen el olfato durante un momento. Por eso el perfume parece irse y volver cada vez que te acercas.</p>
+      </article>
+      <article>
+        <h3>Florece cuando nadie lo espera</h3>
+        <p>Abre a finales del invierno, entre febrero y abril, cuando casi nada más florece. Es de las primeras flores del año.</p>
+      </article>
+      <article>
+        <h3>Quiere decir fidelidad</h3>
+        <p>En el lenguaje victoriano de las flores, regalar violetas era decir sin palabras: te seré fiel. También hablan de la modestia de quien no necesita hacer ruido para ser querida.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="cajetin">
+    <div><span class="versal">Dibujado</span><span>Maximiliano Ramírez Ríos</span></div>
+    <div><span class="versal">Lugar y fecha</span><span>Tomares, 9 de noviembre de 2026</span></div>
+    <div><span class="versal">Plano</span><span>V-01, hoja 1 de 1</span></div>
+    <div><span class="versal">Hecho con</span><span>AutoCAD, Blender Cycles y three.js</span></div>
+  </div>
+</footer>
+
+<div class="visor-plano" id="visor-plano" role="dialog" aria-modal="true" aria-label="Plano V-01 en grande">
+  <button class="cerrar" id="cerrar-plano" type="button">Cerrar</button>
+  <img id="plano-grande" alt="Plano V-01 a tamaño grande" width="4960" height="3507">
+</div>
+
+<script>
+// ----- sobre
+document.body.style.overflow = "hidden";
+const sinMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.getElementById("desatar").addEventListener("click", () => {
+  const s = document.getElementById("sobre"); s.classList.add("abierto");
+  document.body.style.overflow = "";
+  document.body.classList.add("revelado");
+  window.dispatchEvent(new Event("sobre-abierto"));
+  setTimeout(() => s.remove(), 1300);
+  if (!sinMovimiento) setTimeout(lluviaDePetalos, 500);
+});
+
+// Una sola lluvia de pétalos al desatar el lazo
+function lluviaDePetalos() {
+  const c = document.createElement("canvas"); c.className = "petalos"; c.setAttribute("aria-hidden", "true");
+  document.body.appendChild(c);
+  const ctx = c.getContext("2d"), dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let W, H;
+  const tam = () => { W = innerWidth; H = innerHeight; c.width = W * dpr; c.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+  tam(); addEventListener("resize", tam);
+  const colores = [["#5c28a5", "#8e63d6"], ["#4a1f8c", "#7b4fc9"], ["#6a35b8", "#a989e8"], ["#e9e2f5", "#ffffff"]];
+  const n = Math.round(Math.min(60, 26 + W / 30));
+  const p = Array.from({ length: n }, (_, i) => ({
+    x: Math.random() * W, y: -30 - Math.random() * H * 0.55, s: 9 + Math.random() * 14,
+    vy: 70 + Math.random() * 70, a: Math.random() * 6.28, va: (Math.random() - .5) * 2.4,
+    f: Math.random() * 6.28, vf: 1.5 + Math.random() * 2.5, bal: 18 + Math.random() * 40,
+    c: colores[i % 9 === 0 ? 3 : i % 3],
+  }));
+  const t0 = performance.now(); let prev = t0;
+  function petalo(q) {
+    const g = ctx.createLinearGradient(0, 0, 0, -q.s); g.addColorStop(0, q.c[0]); g.addColorStop(1, q.c[1]);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(0, 0);
+    ctx.bezierCurveTo(q.s * .62, -q.s * .18, q.s * .58, -q.s * .95, 0, -q.s);
+    ctx.bezierCurveTo(-q.s * .58, -q.s * .95, -q.s * .62, -q.s * .18, 0, 0); ctx.fill();
+  }
+  (function paso(now) {
+    const dt = Math.min(.05, (now - prev) / 1000), t = (now - t0) / 1000; prev = now;
+    ctx.clearRect(0, 0, W, H);
+    ctx.globalAlpha = t > 6 ? Math.max(0, 1 - (t - 6) / 1.5) : 1;
+    for (const q of p) {
+      q.y += q.vy * dt; q.a += q.va * dt; q.f += q.vf * dt;
+      const x = q.x + Math.sin(q.f * .6) * q.bal;
+      ctx.save(); ctx.translate(x, q.y); ctx.rotate(q.a); ctx.scale(1, Math.abs(Math.cos(q.f)) * .8 + .2); petalo(q); ctx.restore();
+    }
+    if (t < 7.5) requestAnimationFrame(paso); else { removeEventListener("resize", tam); c.remove(); }
+  })(t0);
+}
+
+// El vídeo sólo se decodifica cuando está a la vista
+const peli = document.getElementById("pelicula");
+peli.addEventListener("error", () => {
+  if (peli.dataset.fallback && !peli.src.endsWith(peli.dataset.fallback)) { peli.src = peli.dataset.fallback; }
+  else peli.closest("figure").hidden = true;
+}, true);
+if ("IntersectionObserver" in window) {
+  new IntersectionObserver((ents) => {
+    ents.forEach((e) => { if (e.isIntersecting) { peli.play().catch(() => {}); } else if (!peli.paused) peli.pause(); });
+  }, { threshold: 0.35 }).observe(peli);
+}
+
+// Las secciones fuera de pantalla no se pintan hasta acercarse
+// Los números de la anatomía brotan la primera vez que se ve la lámina
+const lam = document.getElementById("marco");
+if ("IntersectionObserver" in window && !sinMovimiento) {
+  const io = new IntersectionObserver((ents) => {
+    if (ents.some((e) => e.isIntersecting)) {
+      document.querySelectorAll(".punto").forEach((b, i) => { b.style.animationDelay = (i * 0.09) + "s"; b.classList.add("aparece"); });
+      io.disconnect();
+    }
+  }, { threshold: 0.4 });
+  io.observe(lam);
+}
+
+// ----- anatomía
+const PIEZAS = [
+  ["sup", "Pétalos superiores", "Los dos de arriba. Se echan un poco hacia atrás, como unas orejas, y son los más lisos de la flor."],
+  ["lat", "Pétalos laterales", "Las alas, a izquierda y derecha. Abren la flor hacia los lados y tienen la base blanca."],
+  ["barba", "La barba", "Un mechón de pelillos blancos en la base de cada ala. Sirve de agarre y de guía a los insectos que vienen a por néctar."],
+  ["inf", "Pétalo inferior", "El más ancho, el labelo. Tiene la garganta blanca y unos nervios oscuros que dibujan el camino hacia el centro."],
+  ["estilo", "Estilo en pico", "El pequeño pico verde pálido del centro. En su punta está el estigma, que recibe el polen."],
+  ["sepalo", "Sépalos", "Cinco hojitas verdes que sujetan la flor por detrás. Cuando era capullo, eran ellos los que la envolvían."],
+  ["espolon", "Espolón", "Una bolsita que sale hacia atrás desde el pétalo inferior. Ahí guarda la flor su néctar."],
+  ["pedunculo", "Pedúnculo", "El tallo de cada flor. Se curva en gancho al llegar arriba, por eso las violetas miran un poco hacia abajo."],
+];
+const POS = {"sup":[27.21,27.88],"lat":[44.6,52.17],"inf":[31.51,69.72],"barba":[23.6,51.8],"estilo":[31.23,44.2],"sepalo":[22.24,42.5],"espolon":[86.14,45.86],"pedunculo":[31.23,90.96]};
+const marco = document.getElementById("marco"), leyenda = document.getElementById("leyenda"), detalle = document.getElementById("detalle");
+const puntos = [], filas = [];
+PIEZAS.forEach(([id, nombre, texto], i) => {
+  const b = document.createElement("button");
+  b.className = "punto"; b.type = "button"; b.textContent = i + 1;
+  b.style.left = POS[id][0] + "%"; b.style.top = POS[id][1] + "%";
+  b.setAttribute("aria-label", nombre); b.setAttribute("aria-pressed", "false");
+  b.addEventListener("click", () => elegir(i));
+  marco.appendChild(b); puntos.push(b);
+  const li = document.createElement("li"), f = document.createElement("button");
+  f.type = "button"; f.setAttribute("aria-pressed", "false");
+  f.innerHTML = '<span class="n"></span><span class="t"></span>';
+  f.querySelector(".n").textContent = i + 1;
+  f.querySelector(".t").textContent = nombre;
+  f.addEventListener("click", () => elegir(i));
+  li.appendChild(f); leyenda.appendChild(li); filas.push(f);
+});
+function elegir(i) {
+  puntos.forEach((p, k) => p.setAttribute("aria-pressed", String(k === i)));
+  filas.forEach((p, k) => p.setAttribute("aria-pressed", String(k === i)));
+  detalle.innerHTML = "<strong></strong><span></span>";
+  detalle.querySelector("strong").textContent = PIEZAS[i][1];
+  detalle.querySelector("span").textContent = PIEZAS[i][2];
+}
+elegir(3);
+
+// ----- plano en grande
+const vp = document.getElementById("visor-plano");
+document.getElementById("abrir-plano").addEventListener("click", async () => {
+  const big = document.getElementById("plano-grande");
+  if (!big.getAttribute("src")) big.src = "plano_V-01_grande.jpg";
+  vp.classList.add("abierto"); document.body.style.overflow = "hidden";
+  document.getElementById("cerrar-plano").focus();
+});
+function cerrarPlano() { vp.classList.remove("abierto"); document.body.style.overflow = ""; document.getElementById("abrir-plano").focus(); }
+document.getElementById("cerrar-plano").addEventListener("click", cerrarPlano);
+vp.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarPlano(); });
+</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
